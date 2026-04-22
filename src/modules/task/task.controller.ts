@@ -32,3 +32,18 @@ export const getTaskById = async (req: Request, res: Response) => {
 
   res.json(task);
 };
+
+export const getTaskByUserId = async (req: Request, res: Response) => {
+  const userId = Number(req.params.id);
+
+  const task = await prisma.task.findFirst({
+    where: { assignedTo: userId }
+  });
+
+  // ❌ NO organization check → IDOR vulnerability
+  if (!task) {
+    return res.status(404).json({ message: "Tasks not found" });
+  }
+
+  res.json(task);
+};
