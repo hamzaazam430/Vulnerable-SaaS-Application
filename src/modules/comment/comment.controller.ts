@@ -6,8 +6,6 @@ const prisma = new PrismaClient();
 export const createComment = async (req: Request, res: Response) => {
   const { content, taskId } = req.body;
 
-  console.log(`Task Id: ${taskId}, Comment: ${content}`);
-
   const user = (req as any).user;
 
   const comment = await prisma.comment.create({
