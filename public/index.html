@@ -10,7 +10,11 @@
 <input type="file" id="fileInput" />
 <button onclick="uploadFile()">Upload</button>
 
-<div id="uploadedFiles"></div>
+<!-- <div id="uploadedFiles"></div> -->
+<h2>Uploaded Files</h2>
+<button onclick="loadFiles()">Load Files</button>
+
+<div id="fileList"></div>
 
 <hr>
 
@@ -97,7 +101,7 @@
       console.log("Upload response:", data);
 
       // show uploaded file
-      const container = document.getElementById("uploadedFiles");
+      const container = document.getElementById("fileList");
 
       const link = document.createElement("a");
       link.href = API_URL + "/files/" + data.filename;
@@ -108,6 +112,29 @@
       container.appendChild(document.createElement("br"));
     })
     .catch(err => console.error("Upload error:", err));
+  }
+
+  function loadFiles() {
+    fetch(API_URL + "/files")
+      .then(res => res.json())
+      .then(files => {
+        console.log("Files:", files);
+
+        const container = document.getElementById("fileList");
+        container.innerHTML = "";
+
+        files.forEach(file => {
+          const link = document.createElement("a");
+
+          link.href = API_URL + "/files/" + file;
+          link.innerText = file;
+          link.target = "_blank";
+
+          container.appendChild(link);
+          container.appendChild(document.createElement("br"));
+        });
+      })
+      .catch(err => console.error("Error loading files:", err));
   }
 
   // initial load
