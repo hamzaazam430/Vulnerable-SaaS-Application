@@ -4,8 +4,6 @@ import axios from 'axios';
 export const fetchUrl = async (req: Request, res: Response) => {
   const url = req.query.url as string;
 
-  console.log("URL INPUT:",url);
-
   if (!url) {
     return res.status(400).json({ message: "URL is required" });
   }
