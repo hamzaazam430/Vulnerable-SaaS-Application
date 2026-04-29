@@ -28,6 +28,15 @@
 <h2>Comments</h2>
 <div id="comments"></div>
 
+<hr>
+
+<h2>Fetch URL (SSRF)</h2>
+
+<input type="text" id="urlInput" placeholder="Enter URL" />
+<button onclick="fetchUrl()">Fetch</button>
+
+<pre id="responseBox"></pre>
+
 <script>
   const token = localStorage.getItem("token");
   const API_URL = "http://localhost:3000";
@@ -53,6 +62,9 @@
       });
     });
   }
+  
+  // initial load
+  loadComments();
 
   function submitComment() {
     const content = document.getElementById("commentInput").value;
@@ -137,8 +149,17 @@
       .catch(err => console.error("Error loading files:", err));
   }
 
-  // initial load
-  loadComments();
+  function fetchUrl() {
+    const url = document.getElementById("urlInput").value;
+
+    fetch(API_URL + "/fetch?url=" + encodeURIComponent(url))
+      .then(res => res.text())
+      .then(data => {
+        document.getElementById("responseBox").innerText = data;
+      })
+      .catch(err => console.error(err));
+  }
+
 </script>
 
 </body>

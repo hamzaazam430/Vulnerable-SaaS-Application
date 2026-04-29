@@ -4,6 +4,7 @@ import authRoutes from './modules/auth/auth.routes';
 import taskRoutes from './modules/task/task.routes';
 import commentRoutes from './modules/comment/comment.routes';
 import fileRoutes from './modules/file/file.routes';
+import ssrfRoutes from './modules/ssrf/ssrf.routes';
 
 const app = express();
 
@@ -14,6 +15,7 @@ app.use('/auth', authRoutes);
 app.use('/tasks', taskRoutes);
 app.use('/comments', commentRoutes);
 app.use('/files', fileRoutes);
+app.use('/fetch', ssrfRoutes);
 
 app.use(express.static(path.join(__dirname, '../public')));
 
