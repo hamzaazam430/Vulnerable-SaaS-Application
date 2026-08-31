@@ -7,7 +7,7 @@ export const fetchUrl = async (req: Request, res: Response) => {
   if (!url) {
     return res.status(400).json({ message: "URL is required" });
   }
-  console.log(req.headers);
+  
   try {
     const response = await axios.get(url, {
       headers: {
