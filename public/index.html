@@ -3,7 +3,7 @@
 <head>
   <title>Vuln SaaS</title>
 </head>
-<body onload="loadFiles()">
+<body onload="loadBE()">
 
 <h2>Upload File</h2>
 
@@ -149,6 +149,21 @@
       .catch(err => console.error("Error loading files:", err));
   }
 
+  function authenticate(){
+    fetch(API_URL + "/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email: "test.user.1@gmail.com",
+        password: "Pass123$"
+      })
+    })
+    .then(res => res.json())
+    .then(data => {
+      localStorage.setItem("token", data.token);
+    });
+  }
+
   function fetchUrl() {
     const url = document.getElementById("urlInput").value;
 
@@ -158,6 +173,11 @@
         document.getElementById("responseBox").innerText = data;
       })
       .catch(err => console.error(err));
+  }
+
+  function loadBE(){
+    authenticate();
+    loadFiles();
   }
 
 </script>
