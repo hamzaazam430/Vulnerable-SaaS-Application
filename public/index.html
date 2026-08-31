@@ -167,7 +167,11 @@
   function fetchUrl() {
     const url = document.getElementById("urlInput").value;
 
-    fetch(API_URL + "/fetch?url=" + encodeURIComponent(url))
+    fetch(API_URL + "/fetch?url=" + encodeURIComponent(url), {
+        headers: {
+          "Authorization": "Bearer " + token
+        }
+      })
       .then(res => res.text())
       .then(data => {
         document.getElementById("responseBox").innerText = data;
